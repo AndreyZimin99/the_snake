@@ -1,4 +1,5 @@
 from random import choice, randint
+from typing import Optional
 
 import pygame
 
@@ -104,13 +105,13 @@ class Snake(GameObject):
         """
         rect = pygame.Rect((0, 0), (SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, rect)
-        super().__init__()
+        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.length = length
         self.direction = choice(DIRECTION_LIST)
         self.body_color = body_color
         self.positions = [self.position]
         self.next_direction = None
-        self.last = None
+        self.last: Optional[tuple] = None
 
     def update_direction(self) -> None:
         """Метод обновления движения змейки."""

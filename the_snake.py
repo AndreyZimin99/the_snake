@@ -95,7 +95,15 @@ class Snake(GameObject):
     Определяет размер, направление движения,
     """
 
-    def __init__(self, length=1, body_color=SNAKE_COLOR):
+    def __init__(self):
+        self.reset()
+
+    def reset(self, surface=screen, length=1, body_color=SNAKE_COLOR) -> None:
+        """Метод стирает змейку, возвращает ее в начальное состояние и
+        задает направление движения случайным образом.
+        """
+        rect = pygame.Rect((0, 0), (SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, rect)
         super().__init__()
         self.length = length
         self.direction = choice(DIRECTION_LIST)
@@ -126,7 +134,7 @@ class Snake(GameObject):
         vertical_coord %= SCREEN_HEIGHT
         new_head_positions = (horizontal_coord, vertical_coord)
         if new_head_positions in self.positions:
-            self.reset(surface=screen)
+            self.reset()
         else:
             self.positions.insert(0, new_head_positions)
         if len(self.positions) > self.length:
@@ -155,16 +163,6 @@ class Snake(GameObject):
     def get_head_position(self) -> tuple:
         """Метод возвращающает позицию головы змейки."""
         return self.positions[0]
-
-    def reset(self, surface=screen) -> None:
-        """Метод стирает змейку, возвращает ее в начальное состояние и
-        задает направление движения случайным образом.
-        """
-        for self.position in self.positions:
-            super().draw_rect()
-            pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR,
-                             super().draw_rect())
-        Snake.__init__(self)
 
 
 def handle_keys(game_object) -> None:
